@@ -239,7 +239,8 @@ set_comment.sa_item <- function(x, comment){
 #' }
 
 #' @export
-
+#' @importFrom utils read.csv2
+#' @importFrom string str_split
 update_path <- function(ws_path, raw_data_path, param=8, print_log = FALSE){
   
   # Verification that the ws_path leads to a valid workspace 
@@ -278,7 +279,7 @@ update_path <- function(ws_path, raw_data_path, param=8, print_log = FALSE){
   fic_xml<-readLines(ch_fic_xml)
   
   # Retrieval of the series' names from the csv file
-  raw_data<-read.csv2(raw_data_path)
+  raw_data<-utils::read.csv2(raw_data_path)
   series_names_csv<-colnames(raw_data)[-1]# date removal
   series_names_csv
   
@@ -300,8 +301,8 @@ update_path <- function(ws_path, raw_data_path, param=8, print_log = FALSE){
       pos_path<-grep(paste0('"',series_i,'"'),fic_xml,fixed = TRUE)+param
       
       # We extract the path to the raw data file
-      chain1<-unlist(str_split(fic_xml[pos_path],"file="))
-      chain2<-unlist(str_split(chain1[2],".csv"))
+      chain1<-unlist(stringr::str_split(fic_xml[pos_path],"file="))
+      chain2<-unlist(stringr::str_split(chain1[2],".csv"))
       # We insert the new raw data file path and put "the line back in place"
       fic_xml[pos_path]<-paste0(chain1[1],"file=",raw_data_path_JD,chain2[2])
     }

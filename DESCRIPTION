@@ -17,7 +17,9 @@ Depends:
     R (>= 3.1.1),
     RJDemetra
 Imports:
-    rJava (>= 0.9-8)
+    utils,
+    rJava (>= 0.9-8),
+    stringr
 License: EUPL
 URL: https://github.com/InseeFrLab/rjdworkspace
 LazyData: TRUE
